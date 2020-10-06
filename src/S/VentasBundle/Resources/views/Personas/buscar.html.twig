@@ -1,0 +1,131 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href ="{{ asset('bundles/assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+
+{% endblock %}
+{% block content -%}
+    <div class="table-responsive">
+    
+    <!-- ME DICE SI QUIEN ESTA LOEGADO -->
+        <div>
+            <table   WIDTH="100%">
+                <tr >
+                    <th style="text-align:left;">
+                        <h4 style="color:#659B0A">Administrador de Personas</h4>
+                    </th>
+                    <th style="text-align:right;">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <img src="{{ asset('bundles/portaladmin/images/ico_usuario.png') }}" ALT="{{app.user.username}}" />
+                            Usuario: <a style="color:#DD3A7F">{{ app.user.username}}</a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </th>
+                </tr>
+            </table>
+        </div>
+                    
+        <!-- FIN -->
+        
+            <ul>
+        <li>
+            <a href="{{ path('personas_new') }}"><img src="{{ asset('bundles/portaladmin/images/bt-nuevo.png') }}" ALT="Crear" />
+
+            </a>
+        </li>
+        {% set Regitrados = 0 %}
+        {% set Activos = 0 %}
+        {% set Egresados = 0 %}
+        {% set Suspendidos = 0 %}
+        {% set Internos = 0 %}
+        {% set Externos = 0 %}
+        {% for entiti in entities %}
+            {% if entiti.estatus == 1 %}
+                {% set Activos = Activos+1 %}
+            {% endif %}
+            {% if entiti.estatus == 3 %}
+                {% set Egresados = Egresados+1 %}
+            {% endif %}
+            {% if entiti.estatus == 4 %}
+                {% set Suspendidos = Suspendidos+1 %}
+            {% endif %}
+            {% if entiti.tipoPersonal > 0 and entiti.tipoPersonal < 16 %}
+                {% set Internos = Internos+1 %}
+            {% else %}
+                {% set Externos = Externos+1 %}
+            {% endif %}
+        {% endfor %}
+            
+        <li>
+            Total Regitrados: {{ entities|length }}
+            Total Activos: {{ Activos }}
+            Total Egresados: {{ Egresados }}
+            Total Suspendidos: {{ Suspendidos }}
+            Total Internos: {{ Internos }}
+            Total Externos: {{ Externos }}
+        </li>
+    </ul>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Cédula</th>
+                <th>Primer nombre</th>
+                <th>Segundo nombre</th>
+                <th>Primera pellido</th>
+                <th>Segundo apellido</th>
+                <th>Tipo de personal</th>
+                <th>Estatus</th>
+                <th>Cestaticket</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        {% for entity in pagination %}
+            <tr>
+                <td><a href="{{ path('personas_show', { 'id': entity.id }) }}">{{ entity.cedula }}</a></td>
+                <td>{{ entity.primerNombre }}</td>
+                <td>{{ entity.segundoNombre }}</td>
+                <td>{{ entity.primerApellido }}</td>
+                <td>{{ entity.segundoApellido }}</td>
+                <td>{% if entity.tipoPersonal == 1 %}Empleado Fijo
+                    {% elseif entity.tipoPersonal == 2 %}Empleado Contratado
+                    {% elseif entity.tipoPersonal == 3 %}Obrero Fijo
+                    {% elseif entity.tipoPersonal == 4 %}Obrero Contratado
+                    {% elseif entity.tipoPersonal == 5 %}Docente Fijo
+                    {% elseif entity.tipoPersonal == 6 %}Docente Contratado
+                    {% elseif entity.tipoPersonal == 7 %}Jubilado
+                    {% elseif entity.tipoPersonal == 8 %}Comision de Servicios
+                    {% elseif entity.tipoPersonal == 9 %}Libre Nombramiento
+                    {% elseif entity.tipoPersonal == 10 %}Militar
+                    {% elseif entity.tipoPersonal == 11 %}Honorarios Profesionales
+                    {% elseif entity.tipoPersonal == 12 %}Pensionado
+                    {% elseif entity.tipoPersonal == 13 %}Suplente
+                    {% elseif entity.tipoPersonal == 14 %}Contratado
+                    {% elseif entity.tipoPersonal == 15 %}Incapacitados
+                    {% else %}Externo{% endif %}</td>
+                <td>{% if entity.estatus == 1 %}Activo{% elseif entity.estatus == 3 %}Egresado{% elseif entity.estatus == 4 %}Suspendido{% else %}Inactivo{% endif %}</td>
+                <td>{% if entity.nominaCestaticket == 1 %}Activo{% else %}Inactivo{% endif %}</td>
+                <td align="center">
+                        <a href="{{ path('personas_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="Editar personas"><img src="{{ asset('bundles/portaladmin/images/ico_editar.png') }}" ALT="editar" /></a>
+                        <a href="{{ path('personas_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Eliminar personas"><img src="{{ asset('bundles/portaladmin/images/ico_elimiar.png') }}" ALT="Eliminar" /></a>
+                        <!--<a href="{#{ path('noticias_show', { 'id': entity.id }) }}"><img src="{{ asset('bundles/portaladmin/images/ico_lupa.png') }#}" ALT="show" /></a>-->
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan = "5" align="center">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </td>
+        </tr>
+        </tfoot>   
+    </table>
+    </div>
+    {% endblock %}

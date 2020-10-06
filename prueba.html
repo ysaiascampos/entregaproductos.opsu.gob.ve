@@ -1,0 +1,23 @@
+<!-- Manual de JavaScript de WebEstilo.com -->
+<HTML>
+<HEAD>
+   <title>Ejemplo de JavaScript</title>
+</HEAD>
+<script LANGUAGE="JavaScript">
+<!--
+   function Mostrar(boton)
+   {
+      alert('Ha hecho click sobre el boton: ' + boton.name+', de valor:'+boton.value);
+      return true;
+   }
+//-->
+</script>
+<BODY>
+<form action="procesa.phtml" name="formulario" id="formulario" method="GET">
+Un boton: <input type="button" name="Boton1" value="El boton 1" OnClick="Mostrar(this);"><br><br>
+Un boton: <input type="button" name="Boton2" value="El boton 2" OnClick="Mostrar(this);"><br><br>
+Un boton: <input type="button" name="Boton3" value="El boton 3" OnClick="Mostrar(this);"><br>
+</form>
+
+</BODY>
+</HTML> 

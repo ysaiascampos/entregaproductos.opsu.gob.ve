@@ -1,0 +1,108 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href ="{{ asset('bundles/assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+
+{% endblock %}
+{% block content -%}
+    <div class="col-md-12">
+        <h2 style="color:#0F3946">Estatus de Trabajador </h2>
+        <h2 style="color:#0F3946">Evento: {{ entity[0].idEventos.nombre }}</h2>
+<!-- MENSAJE DE ERROR SEGUNDO EL TIPO-->      
+             {% for flashMessage in app.session.flashbag.get('success') %}
+             <div class="alert alert-success">
+             {{ flashMessage }}
+             </div>
+             {% endfor %}
+             {% for flashMessage in app.session.flashbag.get('danger') %}
+             <div class="alert alert-danger">
+             {{ flashMessage }}
+             </div>
+             {% endfor %}
+<!-- FIN DE LOS MENSAJES-->
+        <div class="table-responsive">
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Nacionalidad</th>
+                <td>{% if entity[0].idPersonal.nacionalidad == 0 %}Venezolano{% else %}Extranjero{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cedula</th>
+                <td>{{ entity[0].idPersonal.cedula }}</td>
+                <td  rowspan = "4" align="center"  WIDTH=120><IMG SRC="{{ asset('bundles/fotos_personal/'~entity[0].idPersonal.cedula~'.png') }}" WIDTH=150  ALT="Foto" al></td>
+            </tr>
+            <tr>
+                <th>Primer Nombre</th>
+                <td>{{ entity[0].idPersonal.primerNombre }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Nombre</th>
+                <td>{{ entity[0].idPersonal.segundoNombre }}</td>
+            </tr>
+            <tr>
+                <th>Primer Apellido</th>
+                <td>{{ entity[0].idPersonal.PrimerApellido }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Apellido</th>
+                <td>{{ entity[0].idPersonal.segundoApellido }}</td>
+            </tr>
+            <tr>
+                <th>Produtos</th>
+                <td>
+                    {% set total=0 %}
+                    {% for eventoproductos in entity['eventoproductos'] %}
+                        {{ eventoproductos.cantidad }} * {{ eventoproductos.idProducto.nombre }} : {{ eventoproductos.precio }}
+                        {% set total = (eventoproductos.precio*eventoproductos.cantidad)+total %}
+                        <br></br> 
+                    {% endfor %}
+                    Total: {{ total }}
+                </td>
+            </tr>
+            <tr>
+                <th>Tipopersonal</th>
+                <td>{% if entity[0].idPersonal.tipoPersonal == 0 %}Interno{% else %}Externo{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Estatus</th>
+                {% if entity[0].estatus == 1 %}
+                 <td>{{ 'Ya retiro el producto'}}</td>
+                 {% else %}
+                 <td>{{ 'Disponible para retirar'}}</td>
+                 {% endif %}
+            </tr>
+            {% if entity[0].fechaModificacion %}
+            <tr>
+                <th>Fecha y hora de retiro</th>
+                <td>{{ entity[0].fechaModificacion|date('d-m-Y H:i:s') }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Observación</th>
+                <td>{{ entity[0].observacion }}</td>
+            </tr>
+            <tr>
+                <th>Monto 1</th>
+                <td>{{ entity[0].monto1 }}</td>
+            </tr>
+            <tr>
+                <th>Monto 2</th>
+                <td>{{ entity[0].monto2 }}</td>
+            </tr>
+            <tr>
+                <th>Monto 3</th>
+                <td>{{ entity[0].monto3 }}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+        </div>
+            <a href="{{ path('ventas_edit', { 'id': entity[0].id }) }}">
+            Editar
+        </a>
+
+    </div>
+{% endblock %}
+

@@ -1,0 +1,64 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link href ="{{ asset('bundles/assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block content -%}
+        <!-- ME DICE SI QUIEN ESTA LOEGADO -->
+        <div>
+            <table   WIDTH="100%">
+                <tr >
+                    <th style="text-align:left;">
+                        <h4 style="color:#659B0A">Administrador de Evento a Productos</h4>
+                    </th>
+                    <th style="text-align:right;">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <img src="{{ asset('bundles/portaladmin/images/ico_usuario.png') }}" ALT="{{app.user.username}}" />
+                            Usuario: <a style="color:#DD3A7F">{{ app.user.username}}</a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </th>
+                </tr>
+            </table>
+        </div>
+                    
+        <!-- FIN -->
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.idEvento }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.idProducto }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.precio }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.cantidad }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('eventoproductos') }}">
+            Listado de Eventos a Productos
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('eventoproductos_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

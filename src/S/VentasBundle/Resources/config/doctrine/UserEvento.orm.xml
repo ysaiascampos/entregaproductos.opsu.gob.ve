@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="S\VentasBundle\Entity\UserEvento" table="user_evento" repository-class="S\VentasBundle\Repository\UserEventoRe">
+    <indexes>
+      <index name="user_evento_id_user_idx" columns="id_user"/>
+      <index name="user_evento_id_evento_idx" columns="id_evento"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="user_evento_id_user_id_evento_key" columns="id_user,id_evento"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="user_evento_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="roles" type="string" column="roles" length="45" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="idEvento" target-entity="Eventos" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_evento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idUser" target-entity="FosUser" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_user" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

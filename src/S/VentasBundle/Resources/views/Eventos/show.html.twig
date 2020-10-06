@@ -1,0 +1,68 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link href ="{{ asset('bundles/assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block content -%}
+        <!-- ME DICE SI QUIEN ESTA LOEGADO -->
+        <div>
+            <table   WIDTH="100%">
+                <tr >
+                    <th style="text-align:left;">
+                        <h4 style="color:#659B0A">Administrador de Eventos</h4>
+                    </th>
+                    <th style="text-align:right;">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <img src="{{ asset('bundles/portaladmin/images/ico_usuario.png') }}" ALT="{{app.user.username}}" />
+                            Usuario: <a style="color:#DD3A7F">{{ app.user.username}}</a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </th>
+                </tr>
+            </table>
+        </div>
+                    
+        <!-- FIN -->
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Tipopago</th>
+                <td>{% if entity.tipoPago == 0 %}Prepago{% else %}Pospago {% endif %}</td>
+            </tr>
+            <tr>
+                <th>Estatus</th>
+                <td>{% if entity.estatus == 1 %}Activo{% else %}Inactivo{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ entity.fecha|date('Y-m-d') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('eventos') }}">
+            Listado de Eventos
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('eventos_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

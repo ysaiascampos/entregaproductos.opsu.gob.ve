@@ -1,0 +1,63 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href ="{{ asset('bundles/assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+
+{% endblock %}
+{% block content -%}
+    
+    <!-- ME DICE SI QUIEN ESTA LOEGADO -->
+        <div>
+            <table   WIDTH="100%">
+                <tr >
+                    <th style="text-align:left;">
+                        <h4 style="color:#659B0A">Usuario a Evento</h4>
+                    </th>
+                    <th style="text-align:right;">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <img src="{{ asset('bundles/portaladmin/images/ico_usuario.png') }}" ALT="{{app.user.username}}" />
+                            Usuario: <a style="color:#DD3A7F">{{ app.user.username}}</a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </th>
+                </tr>
+            </table>
+        </div>
+                    
+        <!-- FIN -->
+
+    <div class="table-responsive">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Evento</th>
+                <td>{{ entity.idEvento }}</td>
+            </tr>
+            <tr>
+                <th>Usuario</th>
+                <td>{{ entity.idUser }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ entity.roles }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('userevento') }}">
+            Lista de Usuarios a Eventos
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('userevento_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

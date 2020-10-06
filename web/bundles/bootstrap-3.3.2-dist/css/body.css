@@ -1,0 +1,33 @@
+	body {
+  padding-top: 0px;
+  padding-bottom: 20px;
+  background: #E1E1E1;
+    }
+     #footer {
+        position: relative;
+        left: 0;
+        bottom: 0;
+        height: 100px;
+        width: 100%;
+        
+    }
+    #container {
+        background: white;
+    }
+    
+.text_encima {
+	position: absolute;
+	color: white;
+	font-size: 12px;
+        text-align: center;
+        margin: 20px 0px 0px 200px;
+}
+#portal_adminbundle_noticias_submit {
+    background: #E1E1E1;
+}
+#portal_adminbundle_categoriasnoticias_submit {
+    background: #E1E1E1;
+}
+#form_submit {
+    background: #E1E1E1;
+}

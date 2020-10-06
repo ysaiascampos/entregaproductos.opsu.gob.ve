@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="S\VentasBundle\Entity\Ventas" table="ventas" repository-class="S\VentasBundle\Repository\VentasRe">
+    <indexes>
+      <index name="ventas_id_eventos_idx" columns="id_eventos"/>
+      <index name="IDX_808D9EA1518111" columns="id_personal"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="ventas_id_personal_id_eventos_key" columns="id_personal,id_eventos"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="ventas_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="estatus" type="integer" column="estatus" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="fechaModificacion" type="datetime" column="fecha_modificacion" nullable="true"/>
+    <field name="observacion" type="text" column="observacion" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="monto1" type="float" column="monto1" precision="10" scale="0" nullable="true"/>
+    <field name="monto2" type="float" column="monto2" precision="10" scale="0" nullable="true"/>
+    <field name="monto3" type="float" column="monto3" precision="10" scale="0" nullable="true"/>
+    <many-to-one field="idEventos" target-entity="Eventos" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_eventos" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idPersonal" target-entity="Personas" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_personal" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

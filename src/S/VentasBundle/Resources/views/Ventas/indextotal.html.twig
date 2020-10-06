@@ -1,0 +1,129 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href ="{{ asset('bundles/portaladmin/css/paginador.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block content -%}
+        <div class="table-responsive">
+        <!-- ME DICE SI QUIEN ESTA LOEGADO -->
+        <div>
+            <table   WIDTH="100%">
+                <tr >
+                    <th style="text-align:left;">
+                        <h4 style="color:#659B0A">Total Retiro del producto</h4>
+                    </th>
+                    <th style="text-align:right;">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <img src="{{ asset('bundles/portaladmin/images/ico_usuario.png') }}" ALT="{{app.user.username}}" />
+                            Usuario: <a style="color:#DD3A7F">{{ app.user.username}}</a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </th>
+                </tr>
+            </table>
+        </div>
+                    
+        <!-- FIN -->
+
+        <table>
+            {{ form_start(form) }}
+    {{ form_errors(form) }}
+        <tbody>
+            <tr>
+                <td><h5>{{ form_row(form.evento) }}</h5>{{ form_row(form.buscar, { 'attr':  {class:"btn btn-default"} }) }}</td>
+            </tr>
+        </tbody>
+
+        {{ form_end(form) }}
+    </table>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Cantidad Personal</th>
+                <th>Exportar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% if pagination[1][0].total is defined %}
+                    <th>
+                        <h6>
+                            <a href="{{ path('noretirados', { 'evento': evento }) }}" style="color:#006699"  data-toggle="tooltip" title="Clic para Ver los noretirados">No Retirados
+                            </a>
+                        </h6>
+                    </th>
+                    <td>
+                        <a href="{{ path('noretirados', { 'evento': evento }) }}" style="color:#006699"  data-toggle="tooltip" title="Clic para Ver los noretirados">
+                            {{ pagination[1][0].total }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('excellnoretirados', { 'evento': evento }) }}" style="color:#006699"  data-toggle="tooltip" title="Clic para Ver los noretirados">
+                            -->
+                        </a>
+                    </td>
+                {% else %}
+                    <th>
+                        <h6>
+                            No Retirados
+                        </h6>
+                    </th>
+                    <td>
+                        0
+                    </td>
+                    <td>
+                        
+                    </td>
+                {% endif %}
+
+            </tr>
+            <tr>
+                {% if pagination[2][0].total is defined %}
+                    <th>
+                        <h6>
+                            <a href="{{ path('retirados', { 'evento': evento }) }}" style="color:#006699"  data-toggle="tooltip" title="Clic para Ver los noretirados">Retirados
+                            </a>
+                        </h6>
+                    </th>
+                    <td>
+                        <a href="{{ path('retirados', { 'evento': evento }) }}" style="color:#006699"  data-toggle="tooltip" title="Clic para Ver los noretirados">
+                            {{ pagination[2][0].total }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('excellretirados', { 'evento': evento }) }}" style="color:#006699"  data-toggle="tooltip" title="Clic para Ver los noretirados">
+                            -->
+                        </a>
+                    </td>
+                 {% else %}
+                    <th>
+                        <h6>
+                            Retirados
+                        </h6>
+                    </th>
+                    <td>
+                        0
+                    </td>
+                    <td>
+                        
+                    </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th><h6>Total</h6></th>
+                <th>{% if pagination[0][0].total is defined %}{{ pagination[0][0].total }}{% else %}0{% endif %}
+                </th>
+                <td>{% if evento is defined and evento !="" and pagination[0][0].total !=0%}
+                    <a href="{{ path('excelltretirados', { 'evento': evento }) }}" style="color:#006699"  data-toggle="tooltip" title="Clic para Ver los noretirados">
+                            -->
+                        </a>{% else %}{% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href ="{{ asset('bundles/assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+
+{% endblock %}
+{% block content -%}
+    <div class="col-md-12">
+        <h2 style="color:#0F3946">Estatus de Trabajador</h2>
+<!-- MENSAJE DE ERROR SEGUNDO EL TIPO-->      
+             {% for flashMessage in app.session.flashbag.get('success') %}
+             <div class="alert alert-success">
+             {{ flashMessage }}
+             </div>
+             {% endfor %}
+             {% for flashMessage in app.session.flashbag.get('danger') %}
+             <div class="alert alert-danger">
+             {{ flashMessage }}
+             </div>
+             {% endfor %}
+<!-- FIN DE LOS MENSAJES-->
+        <div class="table-responsive">
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Nacionalidad</th>
+                <td>{% if entity[0].idPersonal.nacionalidad == 0 %}Venezolano{% else %}Extranjero{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cedula</th>
+                <td>{{ entity[0].idPersonal.cedula }}</td>
+                <td  rowspan = "4" align="center"  WIDTH=120><IMG SRC="{{ asset('bundles/fotos_personal/'~entity[0].idPersonal.cedula~'.png') }}" WIDTH=150  ALT="Foto" al></td>
+            </tr>
+            <tr>
+                <th>Primer Nombre</th>
+                <td>{{ entity[0].idPersonal.primerNombre }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Nombre</th>
+                <td>{{ entity[0].idPersonal.segundoNombre }}</td>
+            </tr>
+            <tr>
+                <th>Primer Apellido</th>
+                <td>{{ entity[0].idPersonal.PrimerApellido }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Apellido</th>
+                <td>{{ entity[0].idPersonal.segundoApellido }}</td>
+            </tr>
+            <tr>
+                <th>Produtos</th>
+                <td>
+                    {% set total=0 %}
+                    {% for eventoproductos in entity['eventoproductos'] %}
+                        {{ eventoproductos.cantidad }} * {{ eventoproductos.idProducto.nombre }} : {{ eventoproductos.precio }}
+                        {% set total = (eventoproductos.precio*eventoproductos.cantidad)+total %}
+                        <br></br> 
+                    {% endfor %}
+                    Total: {{ total }}
+                </td>
+            </tr>
+            <tr>
+                <th>Tipo de personal</th>
+                <td>{% if entity[0].idPersonal.tipoPersonal == 1 %}Empleado Fijo
+                    {% elseif entity[0].idPersonal.tipoPersonal == 2 %}Empleado Contratado
+                    {% elseif entity[0].idPersonal.tipoPersonal == 3 %}Obrero Fijo
+                    {% elseif entity[0].idPersonal.tipoPersonal == 4 %}Obrero Contratado
+                    {% elseif entity[0].idPersonal.tipoPersonal == 5 %}Docente Fijo
+                    {% elseif entity[0].idPersonal.tipoPersonal == 6 %}Docente Contratado
+                    {% elseif entity[0].idPersonal.tipoPersonal == 7 %}Jubilado
+                    {% elseif entity[0].idPersonal.tipoPersonal == 8 %}Comision de Servicios
+                    {% elseif entity[0].idPersonal.tipoPersonal == 9 %}Libre Nombramiento
+                    {% elseif entity[0].idPersonal.tipoPersonal == 10 %}Militar
+                    {% elseif entity[0].idPersonal.tipoPersonal == 11 %}Honorarios Profesionales
+                    {% elseif entity[0].idPersonal.tipoPersonal == 12 %}Pensionado
+                    {% elseif entity[0].idPersonal.tipoPersonal == 13 %}Suplente
+                    {% elseif entity[0].idPersonal.tipoPersonal == 14 %}Contratado
+                    {% elseif entity[0].idPersonal.tipoPersonal == 15 %}Incapacitados
+                    {% else %}Externo{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Nomina</th>
+                <td>{{ entity[0].idPersonal.nomina }}</td>
+            </tr>
+            <tr>
+                <th>Unidad Administrativa</th>
+                <td>{{ entity[0].idPersonal.unidadAdministrativa }}</td>
+            </tr>
+            <tr>
+                <th>Ubucación Funcional</th>
+                <td>{{ entity[0].idPersonal.ubucacionFuncional }}</td>
+            </tr>
+            <tr>
+                <th>Cestaticket</th>
+                {% if entity[0].idPersonal.nominaCestaticket == 1 %}<td>Activo</td>{% else %}<td style="color:red">Inactivo</td>{% endif %}
+            </tr>
+            
+            <tr>
+                <th>Estatus Nomina</th>
+                <td>{% if entity[0].idPersonal.estatus == 1 %}Activo{% elseif entity[0].idPersonal.estatus == 3 %}Egresado{% elseif entity.estatus == 4 %}Suspendido{% else %}Inactivo{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Estatus</th>
+                {% if entity[0].estatus == 1 %}
+                 <td style="color:blue">{{ 'Ya retiro el producto'}}</td>
+                 {% else %}
+                 <td style="color:red">{{ 'Disponible para retirar'}}</td>
+                 {% endif %}
+            </tr>
+            {% if entity[0].fechaModificacion %}
+            <tr>
+                <th>Fecha y hora de retiro</th>
+                <td>{{ entity[0].fechaModificacion|date('d-m-Y H:i:s') }}</td>
+            </tr>
+            {% endif %}
+            {% if entity[0].observacion %}
+            <tr>
+                <th>Observación</th>
+                <td>{{ entity[0].observacion }}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+        </div>
+            {#% if entity[0].estatus == 0 %#}
+                 {#{ form(estatus_form) }#}
+                 {{ form_start(estatus_form) }}
+                 {{ form_errors(estatus_form) }}
+                 {{ form_row(estatus_form.monto1, { 'type':'number' } ) }}
+                 {{ form_row(estatus_form.monto2, { 'type':'number' } ) }}
+                 {{ form_row(estatus_form.monto3, { 'type':'number' , 'attr': {'step':'0.01','min':0,'oninvalid':'setCustomValidity("Debe ingresar un monto válido")','oninput':'setCustomValidity("")'} } ) }}
+                 {{ form_end(estatus_form) }}
+        {#% endif %#}
+        <a href="{{ path('buscar') }}">
+                    Volver
+                </a>
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    
+{% endblock %}
+
+

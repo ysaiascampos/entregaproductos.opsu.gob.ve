@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="S\VentasBundle\Entity\EventoProductos" table="evento_productos" repository-class="S\VentasBundle\Repository\EventoProductosRe">
+    <indexes>
+      <index name="evento_productos_id_producto_idx" columns="id_producto"/>
+      <index name="IDX_4B6CA3C861B1BEE8" columns="id_evento"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="evento_productos_id_evento_id_producto_key" columns="id_evento,id_producto"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="evento_productos_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="precio" type="float" column="precio" precision="10" scale="0" nullable="true">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="cantidad" type="float" column="cantidad" precision="10" scale="0" nullable="true">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <many-to-one field="idEvento" target-entity="Eventos" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_evento" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idProducto" target-entity="Productos" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_producto" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

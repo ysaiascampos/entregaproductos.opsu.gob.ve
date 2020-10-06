@@ -1,0 +1,63 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href ="{{ asset('bundles/assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+
+{% endblock %}
+{% block content -%}
+    <div class="col-md-12">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+        <h4 style="color:#0F3946">Buscar Trabajador</h4>
+    
+    
+    <!-- MENSAJE DE ERROR SEGUNDO EL TIPO-->      
+             {% for flashMessage in app.session.flashbag.get('success') %}
+             <div class="alert alert-success">
+             {{ flashMessage }}
+             </div>
+             {% endfor %}
+             {% for flashMessage in app.session.flashbag.get('danger') %}
+             <div class="alert alert-danger">
+             {{ flashMessage }}
+             </div>
+             {% endfor %}
+    <!-- FIN DE LOS MENSAJES-->
+
+   {{ form_start(form) }}
+   {{ form_errors(form) }}
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_row(form.id) }}
+            {{ form_row(form.cedula) }}
+            {{ form_row(form.tipo) }}
+            {{ form_row(form.evento) }}
+        </div>
+    </div>
+    <div class="row">
+        <div style="margin-top: 0.5em;
+                        margin-bottom: 0em;
+                        margin-left: 0em;
+                        margin-right: 0em;">
+            <div class="col-md-8">
+                    {{ form_row(form.buscar, { 'attr': {'class': 'btn btn-primary'} }) }}
+            </div>
+        </div>
+    </div>
+    </div>
+             <div class="col-md-4"></div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type='text/javascript'>
+	    $(document).ready(function() {
+		    //var idu= '{#{ app.users.id }#}';
+			//$('#form_id').val(idu);
+		});
+    </script>
+{% endblock %}
+

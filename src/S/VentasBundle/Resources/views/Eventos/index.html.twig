@@ -1,0 +1,82 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href ="{{ asset('bundles/assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+
+{% endblock %}
+{% block content -%}
+    <div class="table-responsive">
+    
+    <!-- ME DICE SI QUIEN ESTA LOEGADO -->
+        <div>
+            <table   WIDTH="100%">
+                <tr >
+                    <th style="text-align:left;">
+                        <h4 style="color:#659B0A">Administrador de Eventos</h4>
+                    </th>
+                    <th style="text-align:right;">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <img src="{{ asset('bundles/portaladmin/images/ico_usuario.png') }}" ALT="{{app.user.username}}" />
+                            Usuario: <a style="color:#DD3A7F">{{ app.user.username}}</a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </th>
+                </tr>
+            </table>
+        </div>
+                    
+        <!-- FIN -->
+            <ul>
+        <li>
+            <a href="{{ path('eventos_new') }}"><img src="{{ asset('bundles/portaladmin/images/bt-nuevo.png') }}" ALT="Crear" />
+
+            </a>
+        </li>
+    </ul>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Tipopago</th>
+                <th>Rolesusuario</th>
+                <th>Estatus</th>
+                <th>Fecha</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in pagination %}
+            <tr>
+                <td><a href="{{ path('eventos_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nombre }}</a></td>
+                <td>{{ entity.descripcion }}</td>
+                <td>{% if entity.tipoPago == 0 %}Prepago{% else %}Pospago {% endif %}</td>
+                <td>{{ entity.rolesUsuario }}</td>
+                <td>{% if entity.estatus == 1 %}Activo{% elseif entity.estatus == 2 %} Eliminado {% else %}Inactivo{% endif %}</td>
+                <td>{% if entity.fecha %}{{ entity.fecha|date('d-m-Y') }}{% endif %}</td>
+                <td align="center">
+                         <a href="{{ path('agregarlista', { 'idEvento': entity.id }) }}" data-toggle="tooltip" title="agregar lista Completa al eventos"><img src="{{ asset('bundles/portaladmin/images/flech_izq1.png') }}" ALT="agregar lista Completa al eventos" /></a>
+                        <a href="{{ path('eventos_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="Editar eventos"><img src="{{ asset('bundles/portaladmin/images/ico_editar.png') }}" ALT="editar" /></a>
+                        <a href="{{ path('eventos_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Eliminar eventos"><img src="{{ asset('bundles/portaladmin/images/ico_elimiar.png') }}" ALT="Eliminar" /></a>
+                        <!--<a href="{#{ path('noticias_show', { 'id': entity.id }) }}"><img src="{{ asset('bundles/portaladmin/images/ico_lupa.png') }#}" ALT="show" /></a>-->
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    <tfoot>
+        <tr>
+            <td colspan = "5" align="center">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </td>
+        </tr>
+        </tfoot>   
+    </table>
+    </div>
+    {% endblock %}

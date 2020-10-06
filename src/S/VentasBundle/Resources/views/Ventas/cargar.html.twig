@@ -1,0 +1,204 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href ="{{ asset('bundles/portaladmin/css/paginador.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block content -%}
+        <div class="table-responsive">
+        <!-- ME DICE SI QUIEN ESTA LOEGADO -->
+        <div>
+            <table   WIDTH="100%">
+                <tr >
+                    <th style="text-align:left;">
+                        <h4 style="color:#659B0A">Total Retiro del producto</h4>
+                    </th>
+                    <th style="text-align:right;">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <img src="{{ asset('bundles/portaladmin/images/ico_usuario.png') }}" ALT="{{app.user.username}}" />
+                            Usuario: <a style="color:#DD3A7F">{{ app.user.username}}</a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </th>
+                </tr>
+            </table>
+        </div>
+                    
+        <!-- FIN -->
+
+        <table>
+            {{ form_start(form) }}
+    {{ form_errors(form) }}
+        <tbody>
+            <tr>
+                <td>
+                    <h5><a href="{{ asset('archivocsv/formato_ejemplo_importar.csv') }}"> Archivo Ejemplo</a><br></br>{{ form_row(form.archivo) }} </h5>{{ form_row(form.buscar, { 'attr':  {class:"btn btn-default"} }) }}</td>
+                
+            </tr>
+        </tbody>
+
+        {{ form_end(form) }}
+    </table>
+    <table>
+        <tbody>
+            <tr>
+                <td>Lista de Personal No Regitrados total {{ listanopersonalregistrado|length }}
+                </td>
+            </tr>
+            <tr>
+                <td>Lista de Personas ya Registradas en este Evento total {{ registrado|length }}
+                </td>
+            </tr>
+            <tr><td>Lista de Eventos No Regitrados total {{ noeventoregistrado|length }}
+                </td>
+            </tr>
+            <tr>
+                <td>Lista de Personas Agregadas a este Evento total {{ agregadas|length }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+            {% if listanopersonalregistrado[0].cedula is defined %}
+                <h5 >Lista de Personal No Regitrados total {{ listanopersonalregistrado|length }}</h5>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Cedula</th>
+                            <th>id Evento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if listanopersonalregistrado[1] is defined %}
+                            
+                            
+                            {% for lista in listanopersonalregistrado %}
+                                <tr>
+                                    <td>{{ lista.cedula|e }}</td>
+                                    {% if lista[0].eventos is defined %}
+                                        <td>{{ lista[0].eventos |e }}</td>
+                                    {% else %}
+                                        <td>{{ lista.eventos|e }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td>{{ listanopersonalregistrado[0].cedula|e }}</td>
+                                <td>{{ listanopersonalregistrado[0].eventos|e }}</td>
+                            </tr>
+
+                        {% endif %}
+
+                    </tbody>
+                </table>
+            {% endif %}
+            {% if noeventoregistrado[0].cedula is defined %}
+                <h5 >Lista de Eventos No Regitrados total {{ noeventoregistrado|length }}</h5>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Cedula</th>
+                            <th>id Evento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if noeventoregistrado[1] is defined %}
+                            {% for lista in noeventoregistrado %}
+                                <tr>
+                                    <td>{{ lista.cedula|e }}</td>
+                                    {% if lista[0].eventos is defined %}
+                                        <td>{{ lista[0].eventos |e }}</td>
+                                    {% else %}
+                                        <td>{{ lista.eventos|e }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td>{{ noeventoregistrado[0].cedula|e }}</td>
+                                {% if noeventoregistrado[0].eventos is defined %}
+                                    <td>{{ noeventoregistrado[0].eventos |e }}</td>
+                                {% else %}
+                                    <td>{{ noeventoregistrado.eventos|e }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+
+                    </tbody>
+                </table>
+            {% endif %}
+
+            {% if registrado[0].cedula is defined %}
+                <h5 >Lista de Personas ya Registradas en este Evento total {{ registrado|length }}</h5>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Cedula</th>
+                            <th>id Evento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if registrado[1] is defined %}
+                            {% for lista in registrado %}
+                                <tr>
+                                    <td>{{ lista.cedula|e }}</td>
+                                    {% if lista[0].eventos is defined %}
+                                        <td>{{ lista[0].eventos |e }}</td>
+                                    {% else %}
+                                        <td>{{ lista.eventos|e }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td>{{ registrado[0].cedula|e }}</td>
+                                {% if registrado[0].eventos is defined %}
+                                    <td>{{ registrado[0].eventos|e }}</td>
+                                {% else %}
+                                    <td>{{ registrado.eventos|e }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+
+                    </tbody>
+                </table>
+            {% endif %}
+
+            {% if agregadas[0].cedula is defined %}
+                <h5 >Lista de Personas Agregadas a este Evento total {{ agregadas|length }}</h5>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Cedula</th>
+                            <th>id Evento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if agregadas[1] is defined %}
+                            {% for lista in agregadas %}
+                                <tr>
+                                    <td>{{ lista.cedula|e }}</td>
+                                    {% if lista[0].eventos is defined %}
+                                        <td>{{ lista[0].eventos |e }}</td>
+                                    {% else %}
+                                        <td>{{ lista[0].eventos|e }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td>{{ agregadas[0].cedula|e }}</td>
+                                {% if agregadas[0].eventos is defined %}
+                                    <td>{{ agregadas[0].eventos|e }}</td>
+                                {% else %}
+                                    <td>{{ agregadas.eventos|e }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+
+                    </tbody>
+                </table>
+            {% endif %}
+    </div>
+{% endblock %}

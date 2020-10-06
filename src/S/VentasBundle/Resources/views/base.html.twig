@@ -1,0 +1,63 @@
+{% extends '::base.html.twig' %}
+{% block menu %}
+    
+        <!-- Static navbar -->
+	
+      
+        {% if app.user.roles[0]!="ROLE_VENTAS" %}
+          <div id="wrapper_main">
+            <div id="wrapper_menu">
+                <div id="horiz-menu">
+                    <ul class="menu">
+                        <li class="level1 topli"><a href="{{ path('buscar') }}" class="level1 topli topdaddy" title="Buscar"><span>Buscar</span></a>
+                            <!--<ul>
+                                <li><a href="{#{ path('noticias_new') }#}" title="crear noticias"><span>crear noticia</span></a></li>
+                            </ul>-->
+                        </li>
+                        <li class="level1 topli"><a href="{{ path('totalretirados') }}" class="level1 topli topdaddy" title="total de retirados"><span>Total</span></a>
+                        </li>
+                        <li class="level1 topli"><a href="{{ path('productos') }}" class="level1 topli topdaddy" title="productos"><span>Productos</span></a>
+                        </li>
+                        <li class="level1 topli"><a href="{{ path('personas') }}" class="level1 topli topdaddy" title="personas"><span>Personas</span></a>
+                        </li>
+                        <li class="level1 topli"><a href="{{ path('eventos') }}" class="level1 topli topdaddy" title="eventos"><span>Eventos</span></a>
+                        </li>
+                        <li class="level1 topli"><a href="{{ path('eventoproductos') }}" class="level1 topli topdaddy" title="evento y productos"><span>Evento y Productos</span></a>
+                        <li class="level1 topli"><a href="{{ path('userevento') }}" class="level1 topli topdaddy" title="Usuarios a Eventos"><span>Usuarios a Eventos</span></a>
+                        </li>
+                        <li class="level1 topli"><a href="{{ path('ventas') }}" class="level1 topli topdaddy" title="total de retirados"><span>Personas Eventos</span></a>
+                            <ul class="horiz-menu">
+                                <li class="level1 topli"><a href="{{ path('cargar_ventas_create') }}" title="Cargar Lista Personas Eventos"><span>Cargar Lista Personas Eventos</span></a></li>
+                            
+                                <li class="level1 topli"><a href="{{ path('listaPerEventonew') }}" title="Cargar Lista Personas Eventos"><span>Personas Eventos por tipo personal</span></a></li>
+                            </ul>
+                        </li> 
+                        <li id="current" class="level1 topli "><a href="{{ path('listauser') }}" class="level1 topli topdaddy" title="Usuario"><span>usuario</span></a></li>
+                        <li id="current" class="level1 topli "><a href="{{ path('fos_user_security_logout') }}" class="level1 topli topdaddy" title="salir"><span>salir</span></a>
+                        
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+       {% else %}
+        <div id="wrapper_main">
+            <div id="wrapper_menu">
+                <div id="horiz-menu">
+                    <ul class="menu">
+                        <li class="level1 topli"><a href="{{ path('buscar') }}" class="level1 topli topdaddy" title="Buscar"><span>Buscar</span></a>
+                        </li>
+                        <li class="level1 topli"><a href="{{ path('totalretirados') }}" class="level1 topli topdaddy" title="total de retirados"><span>Total</span></a>
+                        </li>
+                        <li id="current" class="level1 topli "><a href="{{ path('fos_user_profile_show') }}" class="level1 topli topdaddy" title="Usuario"><span>usuario</span></a></li>
+                            
+                        <li id="current" class="level1 topli "><a href="{{ path('fos_user_security_logout') }}" class="level1 topli topdaddy" title="salir"><span>salir</span></a>
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif%}
+{% endblock %}
+

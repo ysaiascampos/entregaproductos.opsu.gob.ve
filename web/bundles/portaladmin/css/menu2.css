@@ -1,0 +1,246 @@
+div#horiz-menu{
+	position: relative;
+	width: auto;
+	height: 73px;
+	font-size: 1.20em;
+	z-index:900;
+}
+
+div#horiz-menu ul.menu{
+	padding-left: 11px;
+}
+
+div#horiz-menu li.level1 {
+	line-height: 38px;
+}
+
+div#horiz-menu li.level1 a,
+div#horiz-menu li.level1 span {
+	display: block;
+	width: auto;
+	height: 38px;
+	line-height: 38px;
+}
+
+div#horiz-menu li.level1 span {
+	padding-right: 11px;
+	list-style: none;
+}
+
+div#horiz-menu li.active li span,
+div#horiz-menu li.level1:hover li span{
+	padding-right: 0;
+}
+
+div#horiz-menu li a{
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+div#horiz-menu li a:hover{
+	text-decoration: none !important;
+}
+
+div#horiz-menu li{
+	height: 38px;
+}
+
+div#horiz-menu ul{
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	height: 38px;
+}
+
+div#horiz-menu ul ul{
+	height: 35px;
+}
+
+div#horiz-menu ul li,
+div#horiz-menu ul ul li{
+	float: left;
+	margin: 0 auto 0 0;
+	padding: 0 0 0 13px;
+}
+
+div#horiz-menu ul ul li:first-child{
+	padding-left: 24px;
+}
+
+div#horiz-menu ul ul ul li:first-child,
+div#horiz-menu ul ul ul ul li:first-child,
+div#horiz-menu ul ul ul ul ul li:first-child,
+div#horiz-menu ul ul ul ul ul ul li:first-child,
+div#horiz-menu ul ul ul ul ul ul ul li:first-child{
+	padding-left: 0px!important;
+}
+
+div#horiz-menu ul ul{
+	width: 100%;
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	display: none;
+	z-index: 5000;
+}
+
+div#horiz-menu ul ul ul li span{
+	padding-left: 12px;
+}
+
+div#horiz-menu ul ul ul,
+div#horiz-menu ul ul ul ul,
+div#horiz-menu ul ul ul ul ul,
+div#horiz-menu ul ul ul ul ul ul{
+	width: auto;
+}
+
+div#horiz-menu li:hover ul,
+div#horiz-menu ul li:hover ul{
+	display: block;
+}
+
+div#horiz-menu ul ul ul{
+	width: 190px;
+}
+
+div#horiz-menu ul ul ul ul,
+div#horiz-menu ul ul ul ul ul,
+div#horiz-menu ul ul ul ul ul ul{
+	width: 190px;
+	position: absolute;
+}
+
+div#horiz-menu ul ul ul li{
+	float: none;
+	width: 190px;
+	position: relative;
+	padding: 0;
+	margin: 0;
+	z-index: 5000;
+}
+
+div#horiz-menu li li a,
+div#horiz-menu li li a:hover,
+div#horiz-menu li li span,
+div#horiz-menu li li span:hover,
+div#horiz-menu li li{
+	height: 35px !important;
+}
+
+div#horiz-menu li li li{
+	float: left;
+}
+
+div#horiz-menu li li{
+	position: relative;
+}
+
+div#horiz-menu li li ul {
+	left:-999em;
+	position: absolute;
+	float: none;
+}
+
+div#horiz-menu li li li ul {
+	left:-999em;
+	position: absolute;
+}
+
+div#horiz-menu li li:hover ul {
+	left:0px!important;
+	top: 35px!important;
+	position: absolute;
+}
+
+div#horiz-menu li li:hover li ul,
+div#horiz-menu li li li:hover li ul,
+div#horiz-menu li li li li:hover li ul,
+div#horiz-menu li li li li li:hover li ul{
+	display: none;
+}
+
+
+.users_wrap{
+	background:#fff;
+}
+
+div#wrapper_menu,
+div#wrapper_menu_std{
+    /*background: #0044cc;*/
+	background: url(../images/menu_l1_right.png) no-repeat right 0;
+        border-radius: 5px;
+        
+}
+
+div#horiz-menu li.active,
+div#horiz-menu li.level1:hover{
+    
+    background: url(../images/menu_hover_left.png) no-repeat left 31px;
+    border-radius: 5px;
+}
+
+div#horiz-menu li.active span,
+div#horiz-menu li.level1:hover span{
+   background: url(../images/menu_hover_right.png) no-repeat right 31px;
+}
+
+div#horiz-menu li.active li span,
+div#horiz-menu li.level1:hover li span{
+	background: none;
+}
+
+div#horiz-menu li li.active{
+	background: none;
+}
+
+div#horiz-menu li a{
+	color: #8f8f8f;
+}
+
+div#horiz-menu li li a:hover{
+	color: #990000!important;
+}
+
+div#horiz-menu li.level1 a{
+	color: #fff;
+}
+
+div#horiz-menu li.level1 li a{
+	color: #282828;
+}
+
+div#horiz-menu ul ul ul li{
+	background: #ededed;
+	border-bottom: 1px solid #dadada;
+}
+
+
+
+div#wrapper_main{
+	position: relative;
+	font: normal 1.2em/1.2em  "Liberation Sans", "Nimbus Sans L", "Lucide Sans Unicode", "Arial"; /* Basic font size: 12px, line-height: 15px  "Lucide Sans Unicode","Lucida Grande",Arial,sans-serif*/
+	font-size: 75%; /* Reset: 1em = 10px */
+	font-family: "Liberation Sans" ,"Nimbus Sans L", "Lucide Sans Unicode", "Arial";
+
+}
+
+ul {
+	padding: 0;
+	margin: 0 6px;
+	list-style: none;
+}
+
+ul li {
+	padding-left: 0;
+	line-height: 170%;
+	padding: 5px 0;
+}
+
+ul li a {
+	text-decoration: none !important;
+}
+
+ul li a:hover {
+	text-decoration: underline !important;
+}

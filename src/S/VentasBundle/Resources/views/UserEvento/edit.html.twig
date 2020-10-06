@@ -1,0 +1,56 @@
+{% extends 'SVentasBundle::base.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link href ="{{ asset('bundles/assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+
+{% endblock %}
+{% block content -%}
+    <!-- ME DICE SI QUIEN ESTA LOEGADO -->
+        <div>
+            <table   WIDTH="100%">
+                <tr >
+                    <th style="text-align:left;">
+                        <h3 style="color:#659B0A">Editar Usuario a Evento</h3>
+                    </th>
+                    <th style="text-align:right;">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <img src="{{ asset('bundles/portaladmin/images/ico_usuario.png') }}" ALT="{{app.user.username}}" />
+                            Usuario: <a style="color:#DD3A7F">{{ app.user.username}}</a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </th>
+                </tr>
+            </table>
+        </div>           
+        <!-- FIN -->
+
+    <div class="table-responsive">
+    <table class="table">
+        {{ form_start(form) }}
+    {{ form_errors(form) }}
+        <tbody>
+            <tr>
+                <td>{{ form_row(form.idEvento) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_row(form.idUser) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_row(form.submit) }}</td>
+            </tr>
+        </tbody>
+
+        {{ form_end(form) }}
+    </table>
+    </div>
+           <ul class="record_actions">
+    <li>
+        <a href="{{ path('userevento') }}">
+            Lista de Usuarios a Eventos
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

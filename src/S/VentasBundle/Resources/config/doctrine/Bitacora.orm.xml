@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="S\VentasBundle\Entity\Bitacora" table="bitacora" repository-class="S\VentasBundle\Repository\BitacoraRe">
+    <indexes>
+      <index name="bitacora_id_usuario_idx" columns="id_usuario"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+      <sequence-generator sequence-name="bitacora_id_seq" allocation-size="1" initial-value="1"/>
+    </id>
+    <field name="tabla" type="string" column="tabla" length="45" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="idRegistro" type="integer" column="id_registro" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="registro" type="text" column="registro" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="ip" type="string" column="ip" length="45" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="accion" type="text" column="accion" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="create" type="datetime" column="creates" nullable="true"/>
+    <field name="update" type="datetime" column="updates" nullable="true"/>
+    <many-to-one field="idUsuario" target-entity="FosUser" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_usuario" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
